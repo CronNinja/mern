@@ -1,8 +1,12 @@
-var ballCount = 0;
 const ballpit = {
-  width: 600,
-  height: 600
-}
+  width: parseInt(document.getElementById("ballpit").style.width,10),
+  height: parseInt(document.getElementById("ballpit").style.height,10),
+  left: document.getElementById("ballpit").offsetLeft,
+  top: 0
+};
+// Array of Balls
+let balls = [];
+
 // Create a random color - https://css-tricks.com/snippets/javascript/random-hex-color/
 function randomColor() {
   return Math.floor(Math.random()*16777215).toString(16);
@@ -10,28 +14,51 @@ function randomColor() {
 // Create a random XY coord
 function randomPOS(){
   return {
-    x: Math.floor(Math.random() * 600),
-    y: Math.floor(Math.random() * 600)
+    x: Math.floor(Math.random() * ballpit.height),
+    y: Math.floor(Math.random() * ballpit.width)
   }
 }
 // Ball Objects - a ball is an x position, y position, velocity, color, size, and ElementID
 function createBall(){
   let startXY = randomPOS();
-  return {
-    id: ++ballCount,
+  balls.push({
+    id: balls.length + 1,
     x: Math.abs(startXY.x - ballpit.width),
-    y: Math.abs(startXY.x - ballpit.height),
+    y: Math.abs(startXY.y - ballpit.height),
     color: randomColor(),
     size: 10,
     velocity: {
-      speed: 10,
-      direction: 10
+      x: 10,
+      y: 10
     }
-
+  });
+  return balls[balls.length - 1];
+}
+// Update Ball Stats
+function updateBallStats(){
+  document.getElementById("ballTotal").textContent = balls.length;
+}
+// Update Position
+function updatePosition(ball){
+  if (ball.x + ball.velocity.x > ballpit.width || ball.x + ball.velocity.x < ballpit.left){
+    ball.velocity.x *= -1;
   }
+  if (ball.y + ball.velocity.y > ballpit.height || ball.y + ball.velocity.y < ballpit.top){
+    ball.velocity.y *= -1;
+  }
+  ball.y += ball.velocity.y;
+  ball.x += ball.velocity.x;
+  updateBall(ball);
+}
+// Update all Balls
+function updateAllPOS(){
+  balls.forEach((ball) => {
+    updatePosition(ball);
+  });
 }
 // Add ball to ballpit
-function addBall (ball) {
+function addBall () {
+  let ball = createBall();
   let newBall = document.createElement("div");
   newBall.id = "ball_"+ ball.id;
   newBall.style.zIndex = 5;
@@ -43,6 +70,16 @@ function addBall (ball) {
   newBall.style.borderRadius = "50%";
   newBall.style.background = "#" + ball.color;
   document.getElementById("ballpit").append(newBall);
+  updateBallStats();
 }
-let ball1 = createBall();
-addBall(ball1);
+// Update Ball
+function updateBall(ball){
+  let ballDiv = document.getElementById("ball_" + ball.id);
+  ballDiv.style.left = ball.x + "px";
+  ballDiv.style.top = ball.y + "px";
+  ballDiv.style.width = ball.size + "px";
+  ballDiv.style.height = ball.size + "px";
+  ballDiv.style.background = "#" + ball.color;
+}
+setInterval(addBall, 200)
+setInterval(updateAllPOS, 20);
