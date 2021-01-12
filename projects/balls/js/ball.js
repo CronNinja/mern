@@ -27,7 +27,7 @@ function createBall(){
     x: Math.abs(startXY.x - ballpit.width),
     y: Math.abs(startXY.y - ballpit.height),
     color: randomColor(),
-    size: Math.floor(Math.random() * 5) * 10,
+    size: (Math.floor(Math.random() * 5) +1 ) * 10,
     velocity: {
       x: Math.floor(Math.random() * 10),
       y: Math.floor(Math.random() * 10)
@@ -45,8 +45,7 @@ function collided(ball){
     if(b.id !== ball.id && Math.abs(b.x - ball.x) < ball.size && Math.abs(b.y - ball.y) < ball.size){
       ball.velocity.x *= -1;
       ball.velocity.y *= -1;
-      if((Math.abs(b.velocity.x) + Math.abs(b.velocity.y) > Math.abs(ball.velocity.x) + Math.abs(ball.velocity.y)))
-      ball.color = b.color;
+      if((Math.abs(b.velocity.x) + Math.abs(b.velocity.y) > Math.abs(ball.velocity.x) + Math.abs(ball.velocity.y))) ball.color = b.color;
     }
   });
 }
