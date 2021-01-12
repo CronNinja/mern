@@ -6,6 +6,7 @@ const ballpit = {
 };
 // Array of Balls
 let balls = [];
+let ballCap = 10;
 
 // Create a random color - https://css-tricks.com/snippets/javascript/random-hex-color/
 function randomColor() {
@@ -38,9 +39,21 @@ function createBall(){
 function updateBallStats(){
   document.getElementById("ballTotal").textContent = balls.length;
 }
+// Collided
+function collided(ball){
+  balls.forEach((b) => {
+    if(b.id !== ball.id && Math.abs(b.x - ball.x) < ball.size && Math.abs(b.y - ball.y) < ball.size){
+      ball.velocity.x *= -1;
+      ball.velocity.y *= -1;
+      if((Math.abs(b.velocity.x) + Math.abs(b.velocity.y) > Math.abs(ball.velocity.x) + Math.abs(ball.velocity.y)))
+      ball.color = b.color;
+    }
+  });
+}
 // Update Position
 function updatePosition(ball){
-  if (ball.x + ball.velocity.x > ballpit.width || ball.x + ball.velocity.x < ballpit.left){
+  collided(ball);
+  if (ball.x + ball.velocity.x > ballpit.width || ball.x + ball.velocity.x < ballpit.left ){
     ball.velocity.x *= -1;
   }
   if (ball.y + ball.velocity.y > ballpit.height || ball.y + ball.velocity.y < ballpit.top){
@@ -58,7 +71,7 @@ function updateAllPOS(){
 }
 // Add ball to ballpit
 function addBall () {
-  if (balls.length < 100){
+  if (balls.length < ballCap){
     let ball = createBall();
     let newBall = document.createElement("div");
     newBall.id = "ball_"+ ball.id;
