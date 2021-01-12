@@ -7,6 +7,7 @@ const ballpit = {
 // Array of Balls
 let balls = [];
 let ballCap = 50;
+let bcollision = false;
 
 // Create a random color - https://css-tricks.com/snippets/javascript/random-hex-color/
 function randomColor() {
@@ -44,7 +45,7 @@ function collided(ball){
   balls.forEach((b) => {
     let bsize = b.size/2 + ball.size/2;
     
-    if(b.id !== ball.id && Math.abs(b.x - ball.x) < bsize && Math.abs(b.y - ball.y) < bsize){
+    if(b.id !== ball.id && Math.abs(b.x - ball.x) <= bsize && Math.abs(b.y - ball.y) <= bsize){
       ball.velocity.x *= -1;
       ball.velocity.y *= -1;
       if((Math.abs(b.velocity.x) + Math.abs(b.velocity.y) > Math.abs(ball.velocity.x) + Math.abs(ball.velocity.y))) ball.color = b.color;
@@ -53,7 +54,7 @@ function collided(ball){
 }
 // Update Position
 function updatePosition(ball){
-  // collided(ball);
+  if (bcollision) collided(ball);
   if (ball.x + ball.velocity.x > ballpit.width || ball.x + ball.velocity.x < ballpit.left ){
     ball.velocity.x *= -1;
     ball.size = (Math.floor(Math.random() * 7) + 1) * 10;
@@ -100,6 +101,23 @@ function updateBall(ball){
   ballDiv.style.width = ball.size + "px";
   ballDiv.style.height = ball.size + "px";
   ballDiv.style.background = "#" + ball.color;
+}
+//Function Reset
+function reset(){
+  balls = [];
+  document.getElementById("ballpit").innerHTML = '';
+}
+function collisionDemo(){
+  bcollision = !bcollision;
+  if (bcollision){
+    document.getElementById("collision").textContent = "Remove";
+    ballCap = 10;
+  }
+  else{
+    document.getElementById("collision").textContent = "Add";
+    ballCap = 50;
+  }
+  reset();
 }
 setInterval(addBall, 200)
 setInterval(updateAllPOS, 20)
