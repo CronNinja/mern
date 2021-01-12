@@ -2,7 +2,7 @@ const ballpit = {
   width: document.documentElement.clientWidth,
   height: document.documentElement.clientHeight - document.getElementById("navbar").offsetHeight,
   left: document.getElementById("ballpit").offsetLeft,
-  top: 0
+  top: document.getElementById("navbar").offsetHeight
 };
 // Array of Balls
 let balls = [];
@@ -16,8 +16,8 @@ function randomColor() {
 // Create a random XY coord
 function randomPOS(){
   return {
-    x: Math.floor(Math.random() * ballpit.height),
-    y: Math.floor(Math.random() * ballpit.width)
+    x: Math.floor(Math.random() * ballpit.width),
+    y: 70
   }
 }
 // Ball Objects - a ball is an x position, y position, velocity, color, size, and ElementID
@@ -30,8 +30,8 @@ function createBall(){
     color: randomColor(),
     size: (Math.floor(Math.random() * 5) + 1) * 10,
     velocity: {
-      x: Math.floor(Math.random() * 10) + 1,
-      y: Math.floor(Math.random() * 10) + 1
+      x: Math.floor(Math.random() * 4) + 1,
+      y: Math.floor(Math.random() * 4) + 1
     }
   });
   return balls[balls.length - 1];
@@ -69,6 +69,7 @@ function updatePosition(ball){
   ball.x += ball.velocity.x;
   updateBall(ball);
 }
+
 // Update all Balls
 function updateAllPOS(){
   balls.forEach((ball) => {
@@ -119,5 +120,12 @@ function collisionDemo(){
   }
   reset();
 }
+function sizeBallpit(){
+  let pit = document.getElementById("ballpit");
+  newBall.style.top = ballpit.top + "px";
+  newBall.style.width = ballpit.width+ "px";
+  newBall.style.height = ball.height + "px";
+
+}
 setInterval(addBall, 200)
-setInterval(updateAllPOS, 20)
+setInterval(updateAllPOS, 22)
