@@ -1,6 +1,6 @@
 const ballpit = {
-  width: parseInt(document.getElementById("ballpit").style.width,10),
-  height: parseInt(document.getElementById("ballpit").style.height,10),
+  width: document.documentElement.clientWidth,
+  height: document.documentElement.clientHeight - document.getElementById("navbar").offsetHeight,
   left: document.getElementById("ballpit").offsetLeft,
   top: 0
 };

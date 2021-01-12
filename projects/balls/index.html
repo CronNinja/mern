@@ -6,20 +6,18 @@
 </head>
 
 <body>
-  <div>
-    <nav class="navbar navbar-light bg-light">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="/mern/index.html">Portfolio</a>
-        <button type="button" class="btn btn-danger" onclick="collisionDemo()"><span id="collision">Add</span> Collision</button>
-        <button type="button" class="btn btn-success" onclick="reset()">Reset</button>
-       
-        <span class="navbar-text">
-          Ball Total: <span id="ballTotal">0</span>
-        </span>
-      </div>
-    </nav>
-    <div id="ballpit" style="position: relative; top: 50px; width: 600px; height: 600px;"></div>
-</div>
+  <nav class="navbar navbar-light bg-light" id="navbar">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/mern/index.html">Portfolio</a>
+      <button type="button" class="btn btn-danger" onclick="collisionDemo()"><span id="collision">Add</span> Collision</button>
+      <button type="button" class="btn btn-success" onclick="reset()">Reset</button>
+      
+      <span class="navbar-text">
+        Ball Total: <span id="ballTotal">0</span>
+      </span>
+    </div>
+  </nav>
+  <div id="ballpit"></div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 <script src="./js/ball.js"></script>
