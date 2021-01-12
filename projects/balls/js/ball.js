@@ -28,8 +28,8 @@ function createBall(){
     color: randomColor(),
     size: 10,
     velocity: {
-      x: 10,
-      y: 10
+      x: Math.floor(Math.random() * 10),
+      y: Math.floor(Math.random() * 10)
     }
   });
   return balls[balls.length - 1];
@@ -58,19 +58,21 @@ function updateAllPOS(){
 }
 // Add ball to ballpit
 function addBall () {
-  let ball = createBall();
-  let newBall = document.createElement("div");
-  newBall.id = "ball_"+ ball.id;
-  newBall.style.zIndex = 5;
-  newBall.style.position = "absolute";
-  newBall.style.left = ball.x + "px";
-  newBall.style.top = ball.y + "px";
-  newBall.style.width = ball.size + "px";
-  newBall.style.height = ball.size + "px";
-  newBall.style.borderRadius = "50%";
-  newBall.style.background = "#" + ball.color;
-  document.getElementById("ballpit").append(newBall);
-  updateBallStats();
+  if (balls.length < 100){
+    let ball = createBall();
+    let newBall = document.createElement("div");
+    newBall.id = "ball_"+ ball.id;
+    newBall.style.zIndex = 5;
+    newBall.style.position = "absolute";
+    newBall.style.left = ball.x + "px";
+    newBall.style.top = ball.y + "px";
+    newBall.style.width = ball.size + "px";
+    newBall.style.height = ball.size + "px";
+    newBall.style.borderRadius = "50%";
+    newBall.style.background = "#" + ball.color;
+    document.getElementById("ballpit").append(newBall);
+    updateBallStats();
+  }
 }
 // Update Ball
 function updateBall(ball){
