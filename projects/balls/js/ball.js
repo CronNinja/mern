@@ -6,7 +6,7 @@ const ballpit = {
 };
 // Array of Balls
 let balls = [];
-let ballCap = 50;
+let ballCap = 125;
 let bcollision = false;
 
 // Create a random color - https://css-tricks.com/snippets/javascript/random-hex-color/
@@ -115,7 +115,7 @@ function collisionDemo(){
   }
   else{
     document.getElementById("collision").textContent = "Add";
-    ballCap = 50;
+    ballCap = 125;
   }
   reset();
 }
