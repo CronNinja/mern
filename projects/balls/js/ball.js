@@ -6,7 +6,7 @@ const ballpit = {
 };
 // Array of Balls
 let balls = [];
-let ballCap = 10;
+let ballCap = 50;
 
 // Create a random color - https://css-tricks.com/snippets/javascript/random-hex-color/
 function randomColor() {
@@ -53,12 +53,16 @@ function collided(ball){
 }
 // Update Position
 function updatePosition(ball){
-  collided(ball);
+  // collided(ball);
   if (ball.x + ball.velocity.x > ballpit.width || ball.x + ball.velocity.x < ballpit.left ){
     ball.velocity.x *= -1;
+    ball.size = (Math.floor(Math.random() * 7) + 1) * 10;
+    ball.color = randomColor();
   }
   if (ball.y + ball.velocity.y > ballpit.height || ball.y + ball.velocity.y < ballpit.top){
     ball.velocity.y *= -1;
+    ball.size = (Math.floor(Math.random() * 7) + 1) * 10;
+    ball.color = randomColor();
   }
   ball.y += ball.velocity.y;
   ball.x += ball.velocity.x;
@@ -98,4 +102,4 @@ function updateBall(ball){
   ballDiv.style.background = "#" + ball.color;
 }
 setInterval(addBall, 200)
-setInterval(updateAllPOS, 20);
+setInterval(updateAllPOS, 20)
