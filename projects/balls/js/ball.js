@@ -26,7 +26,7 @@ function createBall(){
     x: Math.abs(startXY.x - ballpit.width),
     y: Math.abs(startXY.y - ballpit.height),
     color: randomColor(),
-    size: 10,
+    size: Math.floor(Math.random() * 5) * 10,
     velocity: {
       x: Math.floor(Math.random() * 10),
       y: Math.floor(Math.random() * 10)
