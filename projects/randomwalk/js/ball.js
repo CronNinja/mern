@@ -176,5 +176,5 @@ function ballFactory(){
   }
 }
 ballFactory();
-setInterval(updateAllPOS, 50)
-setInterval(updateBallStats, 50)
+setInterval(updateAllPOS, 30)
+setInterval(updateBallStats, 30)
