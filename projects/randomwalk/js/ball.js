@@ -1,22 +1,47 @@
+/*
+  This JS file is used for the random walk herd immunity simulation.
+  It uses a factory to create x# (balls) -> ballCap to represent a population
+  and then once a virus is added to the sytem it slowly spreads.
+  
+  To spead the ball has to collide with another ball, after a collision a balls immunity 
+  is increased but there is also a probability they could get sick or die
+*/
+
+// Ballpit is a const that holds the dim of the play area
+// The area is calcuated based off the screen size
 const ballpit = {
   width: document.documentElement.clientWidth,
   height: document.documentElement.clientHeight - document.getElementById("navbar").offsetHeight,
   left: document.getElementById("ballpit").offsetLeft,
   top: document.getElementById("navbar").offsetHeight
 };
-// Array of Balls
+
+// Array of Balls - holds all the balls after they are created
 let balls = [];
+// ballCap is the population or number of balls the program will create
 let ballCap = 1000;
-let range = 18;
+// totalSick is a runnning total of the number of balls that got sick from the virus
 let totalSick = 0;
-// Create a random XY coord
+
+// randomPOS returns a object that has two random coords, based off the the screen size
 function randomPOS(){
   return {
     x: Math.floor(Math.random() * ballpit.width),
     y: Math.floor(Math.random() * (ballpit.height - 70) + 70)
   }
 }
-// Ball Objects - a ball is an x position, y position, velocity, color, size, and ElementID
+/* Ball Objects
+    id: unique identifier - (Number)
+    x: x coord of the ball - (Number)
+    y: y coord of the ball - (Number)
+    color: color of the ball - (String)
+    size: size of the ball in px - (Number)
+    alive: is the ball interacting with the rest of the sim - (Boolean)
+    hasCovid: is the ball carrying the virus - (Boolean)
+    isSick: is the ball actively sick - (Boolean)
+    immunity: the immunity lvl to the virus - (Float)
+    velocity - Object for x (Number) & y (Number) velocity 
+*/
 function createBall(color){
   let startXY = randomPOS();
   balls.push({
@@ -36,47 +61,48 @@ function createBall(color){
   });
   return balls[balls.length - 1];
 }
-function increaseImmunity(){
-  return Math.random() * 10;
-}
-function covidTotal(){
+
+/* getTotal: takes a ball key and returns the number of times
+   that key's element is true for all balls
+
+   Input - key: (String)
+   Returns - (Number)
+*/
+function getTotal(key){
   let count = 0;
   balls.forEach((ball) => {
-    if(ball.hasCovid) count++;
+    if(ball[key]) count++;
   });
   return count;
 }
-function deathTotal(){
-  let count = 0;
-  balls.forEach((ball) => {
-    if(!ball.alive) count++;
-  });
-  return count;
-}
-function immuneTotal(){
+
+// getImmunity: returns the total of immune balls
+function getImmunity(){
   let count = 0;
   balls.forEach((ball) => {
     if(ball.immunity > 100) count++;
   });
   return count;
 }
-// Update Ball Stats
+// updateBallStats - updates all the stat text spans
 function updateBallStats(){
-  let death = deathTotal();
-  document.getElementById("ballTotal").textContent = balls.length - death;
-  document.getElementById("covidTotal").textContent = covidTotal();
+  let alive = getTotal("alive");
+  document.getElementById("ballTotal").textContent = alive;
+  document.getElementById("covidTotal").textContent = getTotal("hasCovid");
   document.getElementById("sickTotal").textContent = totalSick;
-  document.getElementById("deathTotal").textContent = death;
-  document.getElementById("immuneTotal").textContent = immuneTotal();
+  document.getElementById("deathTotal").textContent = ballCap - alive;
+  document.getElementById("immuneTotal").textContent = getImmunity();
 }
-// Collided
+/* Collided - checks to see if a ball collided with any other balls
+    Input - ball (Object)
+*/
 function collided(ball){
   balls.forEach((b) => {
     let bsize = b.size/2 + ball.size/2;
     
     if(b.id !== ball.id && Math.abs(b.x - ball.x) <= bsize && Math.abs(b.y - ball.y) <= bsize && b.hasCovid && b.alive && ball.immunity < 100){
       ball.hasCovid = true;
-      ball.immunity += increaseImmunity();
+      ball.immunity += Math.random() * 10;;
       ball.color = "yellow";
       if(Math.random() < .01 && ball.immunity < 80){
         totalSick++;
@@ -91,11 +117,18 @@ function collided(ball){
     }
   });
 }
+
+// getRandom: Input - step (Number) | Returns Random Step
 function getRandom(step) {
-  // return value between +step and -step
   return Math.random() * 2 * step - step;
 }
-// Update Position
+
+/* updatePosition
+    Takes in a ball, sees if the ball collides with another ball,
+    then check to see if the ball collides with an edge
+
+    Calls updateBall to redraw the ball's location.
+*/
 function updatePosition(ball){
   collided(ball);
   if(ball.immunity >= 100){
@@ -119,13 +152,16 @@ function updatePosition(ball){
   updateBall(ball);
 }
 
-// Update all Balls
+// updateAllPOS - updates the position for every ball in balls
 function updateAllPOS(){
   balls.forEach((ball) => {
     if(ball.alive) updatePosition(ball);
   });
 }
-// Add ball to ballpit
+/* addBall
+    takes a color and creates a new ball and ball div
+    Input - color (String)
+*/
 function addBall (color) {
   if (balls.length < ballCap){
     let ball = createBall(color);
@@ -142,7 +178,9 @@ function addBall (color) {
     document.getElementById("ballpit").append(newBall);
   }
 }
-// Update Ball
+/* updateBall
+    takes a ball and updates its style (position and color)
+*/
 function updateBall(ball){
   let ballDiv = document.getElementById("ball_" + ball.id);
   ballDiv.style.left = ball.x + "px";
@@ -151,25 +189,22 @@ function updateBall(ball){
   ballDiv.style.height = ball.size + "px";
   ballDiv.style.background = ball.color;
 }
-//Function Reset
+// reset - empties balls, ballpit, and renables covidButton
 function reset(){
   balls = [];
   document.getElementById("ballpit").innerHTML = '';
   ballFactory();
   document.getElementById("covidButton").disabled = false;
 }
+// releaseCovid - give the last ball in balls covid, and
+// disables the covidButton
 function releaseCovid(){
-  addBall("red");
   balls[balls.length - 1].hasCovid = true;
   document.getElementById("covidButton").disabled = true;
 }
-function sizeBallpit(){
-  let pit = document.getElementById("ballpit");
-  newBall.style.top = ballpit.top + "px";
-  newBall.style.width = ballpit.width+ "px";
-  newBall.style.height = ball.height + "px";
 
-}
+// ballFactory - creates balls = to the ballCap and addes them 
+// to the balls array
 function ballFactory(){
   for(let i = 0; i <= ballCap; i++){
     addBall("blue");
