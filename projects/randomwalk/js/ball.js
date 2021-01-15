@@ -9,7 +9,7 @@
   threshold you can nolonger get sick but you can still spread the virus
 */
 
-// Ballpit is a const that holds the dim of the play area
+// Ballpit is a const that holds the dim of the area
 // The area is calcuated based off the screen size
 const ballpit = {
   width: document.documentElement.clientWidth,
