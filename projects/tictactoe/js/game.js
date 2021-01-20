@@ -31,13 +31,13 @@ function nextTurn(){
 }
 function checkXY(id, vec){
   let winner = cells.filter(cell => {
-    return cell.selectedBy == whosTurn && cells[id][vec] == cell[vec];
+    return cell.selectedBy === whosTurn && cells[id][vec] === cell[vec];
   })
   return winner;
 }
 function checkDiag(){
   let winner = cells.filter(cell => {
-    return cell.selectedBy == whosTurn && cell.x == cell.y;
+    return cell.selectedBy === whosTurn && cell.x === cell.y;
   })
   return winner;
 }
@@ -45,7 +45,7 @@ function checkDiag2(){
   let winner = [];
   cells.forEach(cell => {
     for(let i = 0; i < 3; i++){
-      if(cell.selectedBy == whosTurn && cell.x == (i + 1) && cell.y == (3 - i)) {
+      if(cell.selectedBy === whosTurn && cell.x === (i + 1) && cell.y === (3 - i)) {
         winner.push(cell);
       }
     }
@@ -60,7 +60,7 @@ function showWin(wC){
 }
 function chickenDinner(wCells){
   gameOver = 1;
-  if(whosTurn == 'X') document.getElementById("xWins").innerHTML = ++wins[0];
+  if(whosTurn === 'X') document.getElementById("xWins").innerHTML = ++wins[0];
   else document.getElementById("oWins").innerHTML = ++wins[1];
   showWin(wCells);
 }
