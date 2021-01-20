@@ -45,7 +45,7 @@ function createCellHtml (x, y) {
   document.getElementById("cardBody_" + cell.id).append(cardText);
 }
 
-// When a cell is selected, and call updateBoard
+// When a cell is selected, this function calls updateBoard
 function cellSelected(id){
   if(!gameOver){
     let cStr = id.srcElement.id.toString();
@@ -76,7 +76,7 @@ function hasWon(id){
   else nextTurn();
 }
 
-// Changes whoTurn var and updates html
+// Changes whoTurn var and update html
 function nextTurn(){
   if(whosTurn === 'X') {
     document.getElementById("whosUp").innerHTML = whosTurn = "O";
@@ -85,14 +85,14 @@ function nextTurn(){
   }
 }
 
-// Checks to see if there is a horizontal or verticle win eturns winning a cells
+// Checks to see if there is a horizontal or verticle win returns winning a cells
 function checkXY(id, vec){
   let winner = cells.filter(cell => {
     return cell.selectedBy === whosTurn && cells[id][vec] === cell[vec];
   })
   return winner;
 }
-// Checks to see if there is a diaganol win for [1, 5, 9] eturns winning a cells
+// Checks to see if there is a diaganol win for [1, 5, 9] returns winning a cells
 function checkDiag(){
   let winner = cells.filter(cell => {
     return cell.selectedBy === whosTurn && cell.x === cell.y;
