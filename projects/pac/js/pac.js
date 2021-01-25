@@ -5,15 +5,20 @@ const gameboard = {
   top: document.getElementById("navbar").offsetHeight
 };
 
+let walls = [];
+let speed = {
+  x: 20,
+  y: 20
+};
 let pac = {
-  x: 50,
-  y: gameboard.height - 50,
-  speed: 20,
-  size: 40,
-  direction: "up",
+  x: gameboard.width - 100,
+  y: 200,
+  width: 41,
+  height: 41,
+  direction: "left",
   velocity: {
-    x: 20,
-    y: 20
+    x: speed.x,
+    y: speed.y
   },
   phase: 2,
   lives: 3
@@ -24,10 +29,12 @@ function createPac(){
     pacDOM.style.position = "absolute";
     pacDOM.style.left = pac.x + "px";
     pacDOM.style.top = pac.y + "px";
-    pacDOM.src = "images/pac-right-2.png";
+    pacDOM.src = "images/pac-left-2.png";
     document.getElementById("gameboard").append(pacDOM);
+    setInterval(run,100);
 }
 function run(){
+  wallDetection();
   edgeDetection();
   switch (pac.direction) {
     case "right":
@@ -50,20 +57,38 @@ function run(){
       break;
   }
   document.getElementById("pac").src = "images/pac-" + pac.direction + "-" + updatePhase() + ".png"; 
+  pac.width = document.getElementById("pac").width;
+  pac.height = document.getElementById("pac").height;
 }
 function edgeDetection(){
-  if(pac.size + pac.x > gameboard.width && pac.direction === "right"){
-    pac.x = pac.size * -1;
+  if(pac.width + pac.x > gameboard.width && pac.direction === "right"){
+    pac.x = pac.width * -1;
   }
-  else if(pac.size + pac.x < 0 && pac.direction === "left"){
+  else if(pac.width + pac.x < 0 && pac.direction === "left"){
     pac.x = gameboard.width;
   }
   else if(pac.y < gameboard.top && pac.direction === "up"){
     pac.y = gameboard.height;
   }
-  else if(pac.y + pac.size > gameboard.height && pac.direction === "down"){
+  else if(pac.y + pac.height > gameboard.height && pac.direction === "down"){
     pac.y = gameboard.top;
   }
+}
+function isBetween(v1, c1, c2){
+  if(v1 >= c1 && v1 <= (c1 + c2)) return true;
+  return false
+}
+function wallDetection(){
+  walls.forEach((wall) => {
+    if(Math.abs(wall.x + wall.width - pac.x) < pac.width && isBetween(pac.y, wall.y, wall.height) && pac.direction === "left"){
+      pac.velocity.x = 0;
+      pac.x = wall.x + wall.width;
+    }
+    else if(Math.abs(wall.x - pac.x - pac.width) < pac.width && isBetween(pac.y, wall.y, wall.height) && pac.direction === "right"){
+      pac.velocity.x = 0;
+      pac.x = wall.x - pac.width;
+    }
+  });
 }
 function updatePhase(){
   return pac.phase++ % 3 + 1;
@@ -86,6 +111,37 @@ function checkKey(e) {
       default:
         break;
     }
+    pac.velocity.x = speed.x;
+    pac.velocity.y = speed.y;
 }
-createPac();
-setInterval(run,100);
+function createWall(x, y, w, h){
+  walls.push({
+    id: walls.length + 1,
+    x: x,
+    y: y,
+    width: w,
+    height: h
+  });
+  return walls[walls.length - 1];
+}
+function addWall (x, y, w, h) {
+  let wall = createWall(x, y, w, h);
+  let newWall = document.createElement("div");
+  newWall.id = "wall_"+ wall.id;
+  newWall.style.position = "absolute";
+  newWall.style.left = wall.x + "px";
+  newWall.style.top = wall.y + "px";
+  newWall.style.width = wall.width + "px";
+  newWall.style.height = wall.height + "px";
+  newWall.style.backgroundColor = "#000";
+  document.getElementById("gameboard").append(newWall);
+}
+
+function createWallDOM(){
+  addWall(350,300,30,100);
+  addWall(600,300,30,100);
+}
+function startGame(){
+  document.getElementById("startGameButton").disabled = true;
+  createPac();
+}
