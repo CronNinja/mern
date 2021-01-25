@@ -80,14 +80,17 @@ function isBetween(v1, c1, c2){
 }
 function wallDetection(){
   walls.forEach((wall) => {
-    if(Math.abs(wall.x + wall.width - pac.x) < pac.width && isBetween(pac.y, wall.y, wall.height) && pac.direction === "left"){
-      pac.velocity.x = 0;
-      pac.x = wall.x + wall.width;
+    if((isBetween((pac.y + pac.height), wall.y, wall.height) || isBetween(pac.y, wall.y, wall.height))){
+      if(Math.abs(wall.x + wall.width - pac.x) < pac.width && pac.direction === "left"){
+        pac.velocity.x = 0;
+        pac.x = wall.x + wall.width;
+      }
+      else if(Math.abs(wall.x - pac.x - pac.width) < pac.width && pac.direction === "right"){
+        pac.velocity.x = 0;
+        pac.x = wall.x - pac.width;
+      }
     }
-    else if(Math.abs(wall.x - pac.x - pac.width) < pac.width && isBetween(pac.y, wall.y, wall.height) && pac.direction === "right"){
-      pac.velocity.x = 0;
-      pac.x = wall.x - pac.width;
-    }
+
   });
 }
 function updatePhase(){
@@ -139,7 +142,7 @@ function addWall (x, y, w, h) {
 
 function createWallDOM(){
   addWall(350,300,30,100);
-  addWall(600,300,30,100);
+  addWall(350,475,30,100);
 }
 function startGame(){
   document.getElementById("startGameButton").disabled = true;
