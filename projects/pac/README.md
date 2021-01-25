@@ -9,5 +9,8 @@ First select the piece you want to add to the envirnoment (Currently working on 
 ## Plans
 I am currently finishing some collision code, and hope to finish the rest of the wall building code by 26-01-2021.
 
-## Demo
+### Demo
 https://cronninja.github.io/mern/projects/pac/
+
+### Glitches
+You can currently move through walls vertically, working on solution
