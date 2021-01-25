@@ -83,21 +83,21 @@ function wallDetection(){
     if(isBetween((pac.y + pac.height), wall.y, wall.height) || isBetween(pac.y, wall.y, wall.height)){
       if(Math.abs(wall.x + wall.width - pac.x) < pac.width && pac.direction === "left"){
         pac.velocity.x = 0;
-        pac.x = wall.x + wall.width;
+        pac.x = wall.x + wall.width + 5;
       }
       else if(Math.abs(wall.x - pac.x - pac.width) < pac.width && pac.direction === "right"){
         pac.velocity.x = 0;
-        pac.x = wall.x - pac.width;
+        pac.x = wall.x - pac.width - 5;
       }
     }
-    else if(isBetween((pac.x + pac.width), wall.x, wall.width) || isBetween(pac.x, wall.x, wall.width)){
+    if(isBetween((pac.x + pac.width), wall.x, wall.width) || isBetween(pac.x, wall.x, wall.width)){
       if(Math.abs(wall.y + wall.height - pac.y) < pac.height && pac.direction === "up"){
         pac.velocity.y = 0;
-        pac.y = wall.y + wall.height;
+        pac.y = wall.y + wall.height + 5;
       }
       else if(Math.abs(wall.y - pac.y - pac.height) < pac.height && pac.direction === "down"){
         pac.velocity.y = 0;
-        pac.y = wall.y - pac.height;
+        pac.y = wall.y - pac.height - 5;
       }
     }
 
@@ -151,12 +151,13 @@ function addWall (x, y, w, h) {
 }
 
 function createWallDOM(){
-  addWall(350,300,30,100);
-  addWall(350,475,30,100);
-  addWall(450,300,30,100);
-  addWall(450,475,30,100);
-  addWall(350,300,100,30);
-  addWall(350,475,100,30);
+  addWall(100,100,50,200);
+  addWall(300,100,50,200);
+  addWall(150,100,150,50);
+
+  addWall(100,375,50,200);
+  addWall(300,375,50,200);
+  addWall(150,375,150,50);
 }
 function startGame(){
   document.getElementById("startGameButton").disabled = true;
