@@ -11,6 +11,3 @@ I am currently finishing some collision code, and hope to finish the rest of the
 
 ### Demo
 https://cronninja.github.io/mern/projects/pac/
-
-### Glitches
-You can currently move through walls vertically, working on solution
