@@ -4,7 +4,7 @@ const gameboard = {
   left: document.getElementById("gameboard").offsetLeft,
   top: document.getElementById("navbar").offsetHeight
 };
-
+let runTime = null;
 let walls = [];
 let speed = {
   x: 20,
@@ -31,7 +31,6 @@ function createPac(){
     pacDOM.style.top = pac.y + "px";
     pacDOM.src = "images/pac-left-2.png";
     document.getElementById("gameboard").append(pacDOM);
-    setInterval(run,100);
 }
 function run(){
   wallDetection();
@@ -106,26 +105,36 @@ function wallDetection(){
 function updatePhase(){
   return pac.phase++ % 3 + 1;
 }
+function stopPac(){
+  pac.velocity.x = 0;
+      pac.velocity.y = 0;
+}
 document.onkeydown = checkKey;
 function checkKey(e) {
-    switch (e.key) {
-      case "ArrowUp":
-        pac.direction = "up";
-        break;
-      case 'ArrowDown':
-        pac.direction = "down";
-        break;
-      case 'ArrowLeft':
-        pac.direction = "left";
-        break;
-      case 'ArrowRight':
-        pac.direction = "right";
-        break;
-      default:
-        break;
+  let eKey = e.key;
+  switch (eKey) {
+    case "ArrowUp":
+      pac.direction = "up";
+      break;
+    case 'ArrowDown':
+      pac.direction = "down";
+      break;
+    case 'ArrowLeft':
+      pac.direction = "left";
+      break;
+    case 'ArrowRight':
+      pac.direction = "right";
+      break;
+    default:
+      break;
     }
-    pac.velocity.x = speed.x;
-    pac.velocity.y = speed.y;
+    if (eKey === 's' || eKey === 'S'){
+      stopPac();
+    }
+    else{
+      pac.velocity.x = speed.x;
+      pac.velocity.y = speed.y;
+    }
 }
 function createWall(x, y, w, h){
   walls.push({
@@ -161,5 +170,16 @@ function createWallDOM(){
 }
 function startGame(){
   document.getElementById("startGameButton").disabled = true;
+  document.getElementById("resetButton").disabled = false;
   createPac();
+  runTime = setInterval(run,100);
+}
+
+function reset(){
+  walls = [];
+  clearInterval(runTime);
+  stopPac();
+  document.getElementById("resetButton").disabled = true;
+  document.getElementById("gameboard").innerHTML = "";
+  document.getElementById("startGameButton").disabled = false;
 }
