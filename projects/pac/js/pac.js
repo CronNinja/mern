@@ -12,7 +12,7 @@ let speed = {
   x: 20,
   y: 20
 };
-function roundDown50(n){
+function roundDown(n){
   return Math.round(n / 50) * 50;
 }
 let pac = {
@@ -134,8 +134,8 @@ function removeObject(x, y){
 }
 document.onmousedown = checkMouse;
 function checkMouse(e){
-  let x = roundDown50(e.clientX);
-  let y = roundDown50(e.clientY) + 6;
+  let x = roundDown(e.clientX);
+  let y = roundDown(e.clientY) + 6;
   if(y > gameboard.top){
     if(placementCheck(x, y) && build){
       switch (build) {
@@ -157,21 +157,29 @@ function checkKey(e) {
   let eKey = e.key;
   switch (eKey) {
     case "ArrowUp":
+    case "w":
+    case "W":
       pac.direction = "up";
       break;
     case 'ArrowDown':
+    case "s":
+    case "S":
       pac.direction = "down";
       break;
     case 'ArrowLeft':
+    case "a":
+    case "A":
       pac.direction = "left";
       break;
     case 'ArrowRight':
+    case "d":
+    case "D":
       pac.direction = "right";
       break;
     default:
       break;
     }
-    if (eKey === 's' || eKey === 'S'){
+    if (eKey === ' ' || e.code === "Space"){
       stopPac();
     }
     else{
@@ -179,18 +187,19 @@ function checkKey(e) {
       pac.velocity.y = speed.y;
     }
 }
-function createWall(x, y, w, h){
+function createWall(x, y, w, h, c){
   walls.push({
     id: walls.length + 1,
     x: x,
     y: y,
     width: w,
-    height: h
+    height: h,
+    color: c
   });
   return walls[walls.length - 1];
 }
-function addWall (x, y, w, h) {
-  let wall = createWall(x, y, w, h);
+function addWall (x, y, w, h, c = '000') {
+  let wall = createWall(x, y, w, h, c);
   let newWall = document.createElement("div");
   newWall.id = "wall_"+ wall.id;
   newWall.style.position = "absolute";
@@ -198,7 +207,7 @@ function addWall (x, y, w, h) {
   newWall.style.top = wall.y + "px";
   newWall.style.width = wall.width + "px";
   newWall.style.height = wall.height + "px";
-  newWall.style.backgroundColor = "#000";
+  newWall.style.backgroundColor = "#" + c;
   document.getElementById("gameboard").append(newWall);
 }
 
