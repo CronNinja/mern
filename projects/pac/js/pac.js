@@ -5,14 +5,19 @@ const gameboard = {
   top: document.getElementById("navbar").offsetHeight
 };
 let runTime = null;
+let wallThinkness = 50;
 let walls = [];
+let build = "";
 let speed = {
   x: 20,
   y: 20
 };
+function roundDown50(n){
+  return Math.round(n / 50) * 50;
+}
 let pac = {
-  x: gameboard.width - 100,
-  y: 200,
+  x: 300,
+  y: 210,
   width: 41,
   height: 41,
   direction: "left",
@@ -109,6 +114,44 @@ function stopPac(){
   pac.velocity.x = 0;
       pac.velocity.y = 0;
 }
+function placementCheck(x, y){
+  let checker = true;
+  walls.forEach((wall) => {
+    if(x === wall.x  && y === wall.y) checker = false;
+  });
+  return checker;
+}
+function removeObject(x, y){
+  walls.forEach((wall) => {
+    if(x === wall.x  && y === wall.y){
+      if(wall.id !== walls.length){
+        walls.push(walls.splice(wall.id - 1, 1)[0]);
+      }
+      document.getElementById("wall_" + wall.id).remove();
+      walls.pop();
+    }
+  });
+}
+document.onmousedown = checkMouse;
+function checkMouse(e){
+  let x = roundDown50(e.clientX);
+  let y = roundDown50(e.clientY) + 6;
+  if(y > gameboard.top){
+    if(placementCheck(x, y) && build){
+      switch (build) {
+        case "Wall":
+          addWall(x, y, wallThinkness, wallThinkness);
+          break;
+      
+        default:
+          break;
+      }
+    }
+    else if (!placementCheck(x, y), build === "Remove"){
+      removeObject(x, y);
+    }
+  }
+}
 document.onkeydown = checkKey;
 function checkKey(e) {
   let eKey = e.key;
@@ -159,27 +202,30 @@ function addWall (x, y, w, h) {
   document.getElementById("gameboard").append(newWall);
 }
 
-function createWallDOM(){
-  addWall(100,100,50,200);
-  addWall(300,100,50,200);
-  addWall(150,100,150,50);
+function addObject(type){
+  build = type;
 
-  addWall(100,375,50,200);
-  addWall(300,375,50,200);
-  addWall(150,375,150,50);
 }
 function startGame(){
   document.getElementById("startGameButton").disabled = true;
-  document.getElementById("resetButton").disabled = false;
-  createPac();
   runTime = setInterval(run,100);
 }
-
+function swapGrid(){
+  if(document.getElementById("gameboard").className){
+    document.getElementById("gameboard").className = "";
+    document.getElementById("gridButton").className = "btn btn-warning";
+  }
+  else{
+    document.getElementById("gameboard").className = "backgroundGrid";
+    document.getElementById("gridButton").className = "btn btn-success";
+  }
+}
 function reset(){
+  stopPac();
   walls = [];
   clearInterval(runTime);
-  stopPac();
-  document.getElementById("resetButton").disabled = true;
-  document.getElementById("gameboard").innerHTML = "";
   document.getElementById("startGameButton").disabled = false;
+  document.getElementById("gameboard").innerHTML = "";
+  createPac();
 }
+createPac();
