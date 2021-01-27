@@ -15,7 +15,7 @@
       <button type="button" class="btn btn-warning" onclick="swapGrid()" id="gridButton">Grid</button>
       <button type="button" class="btn btn-secondary" onclick="reset()" id="resetButton">Reset</button>
       <span class="navbar-text">
-        Arrow Keys Move, S key Stops
+        Arrow Keys Move, Spacebar Stops
       </span>
     </div>
   </nav>
@@ -28,10 +28,18 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <button type="button" class="btn btn-dark" onclick="addObject('Wall')" id="resetButton" data-bs-dismiss="modal">Wall</button>
+        <button type="button" class="btn btn-dark" onclick="addObject('Wall')"  data-bs-dismiss="modal">Wall</button>
+        <button type="button" class="btn btn-danger" onclick="addObject('Remove', 'Wall')"  data-bs-dismiss="modal">Remove</button>
         <hr >
-        <button type="button" class="btn btn-danger" onclick="addObject('Remove')" id="resetButton" data-bs-dismiss="modal">Remove</button>
-
+       <!-- <input type="image"  onclick="addObject('Ghost', 'blue')"  src="images/blue-left-1.png" data-bs-dismiss="modal"/>
+        <input type="image"  onclick="addObject('Ghost', 'green')"  src="images/green-left-1.png" data-bs-dismiss="modal"/>
+        <input type="image"  onclick="addObject('Ghost', 'orange')"  src="images/orange-left-1.png" data-bs-dismiss="modal"/>
+        <input type="image"  onclick="addObject('Ghost', 'pink')"  src="images/pink-left-1.png" data-bs-dismiss="modal"/>
+        <input type="image"  onclick="addObject('Ghost', 'purple')"  src="images/purple-left-1.png" data-bs-dismiss="modal"/>
+        <input type="image"  onclick="addObject('Ghost', 'red')"  src="images/red-left-1.png" data-bs-dismiss="modal"/>
+        <button type="button" class="btn btn-danger" onclick="addObject('Remove', 'Ghost')"  data-bs-dismiss="modal">Remove</button>
+        <hr >
+       -->
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

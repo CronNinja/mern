@@ -7,7 +7,9 @@ const gameboard = {
 let runTime = null;
 let wallThinkness = 50;
 let walls = [];
+let ghosts = [];
 let build = "";
+let objectOption =  "";
 let speed = {
   x: 20,
   y: 20
@@ -30,12 +32,12 @@ let pac = {
 }
 function createPac(){
   let pacDOM = document.createElement("img");
-    pacDOM.id = "pac";
-    pacDOM.style.position = "absolute";
-    pacDOM.style.left = pac.x + "px";
-    pacDOM.style.top = pac.y + "px";
-    pacDOM.src = "images/pac-left-2.png";
-    document.getElementById("gameboard").append(pacDOM);
+  pacDOM.id = "pac";
+  pacDOM.style.position = "absolute";
+  pacDOM.style.left = pac.x + "px";
+  pacDOM.style.top = pac.y + "px";
+  pacDOM.src = "images/pac-left-2.png";
+  document.getElementById("gameboard").append(pacDOM);
 }
 function run(){
   wallDetection();
@@ -114,21 +116,21 @@ function stopPac(){
   pac.velocity.x = 0;
       pac.velocity.y = 0;
 }
-function placementCheck(x, y){
-  let checker = true;
-  walls.forEach((wall) => {
-    if(x === wall.x  && y === wall.y) checker = false;
+function placementCheck(x, y, arr){
+  let checker = 1;
+  arr.forEach((obj) => {
+    if(x === obj.x  && y === obj.y) checker = 0;
   });
   return checker;
 }
-function removeObject(x, y){
-  walls.forEach((wall) => {
-    if(x === wall.x  && y === wall.y){
-      if(wall.id !== walls.length){
-        walls.push(walls.splice(wall.id - 1, 1)[0]);
+function removeObject(x, y, arr, s){
+  arr.forEach((obj) => {
+    if(x === obj.x  && y === obj.y){
+      if(obj.id !== arr.length){
+        arr.push(arr.splice(obj.id - 1, 1)[0]);
       }
-      document.getElementById("wall_" + wall.id).remove();
-      walls.pop();
+      document.getElementById(s + "_" + obj.id).remove();
+      arr.pop();
     }
   });
 }
@@ -136,19 +138,31 @@ document.onmousedown = checkMouse;
 function checkMouse(e){
   let x = roundDown(e.clientX);
   let y = roundDown(e.clientY) + 6;
+  let placement = placementCheck(x, y, walls);
   if(y > gameboard.top){
-    if(placementCheck(x, y) && build){
+    if(placement && build){
       switch (build) {
         case "Wall":
           addWall(x, y, wallThinkness, wallThinkness);
           break;
-      
+        case "Ghost":
+          addGhost(x, y, objectOption);
+          break;
         default:
           break;
       }
     }
-    else if (!placementCheck(x, y), build === "Remove"){
-      removeObject(x, y);
+    else if (placement === 0, build === "Remove"){
+      switch (objectOption) {
+        case "Wall":
+          removeObject(x, y, walls, "wall");
+          break;
+        case "Ghost":
+          removeObject(x, y, ghosts, "ghost");
+          break;
+        default:
+          break;
+      }
     }
   }
 }
@@ -211,9 +225,37 @@ function addWall (x, y, w, h, c = '000') {
   document.getElementById("gameboard").append(newWall);
 }
 
-function addObject(type){
+function createGhost(x, y, c){
+  ghosts.push({
+    id: ghosts.length + 1,
+    x: x,
+    y: y,
+    width: 41,
+    height: 41,
+    direction: "left",
+    color: c,
+    velocity: {
+      x: speed.x,
+      y: speed.y
+    },
+    phase: 1,
+    state: "alive"
+  });
+  return ghosts[ghosts.length - 1];
+}
+function addGhost(x, y, c = blue){
+  let ghost = createGhost(x, y, c);
+  let newGhost = document.createElement("img");
+  newGhost.id = "ghost_" + ghost.id;
+  newGhost.style.position = "absolute";
+  newGhost.style.left = ghost.x + "px";
+  newGhost.style.top = ghost.y + "px";
+  newGhost.src = "images/" + ghost.color + "-left-1.png";
+  document.getElementById("gameboard").append(newGhost);
+}
+function addObject(type, option = ''){
   build = type;
-
+  objectOption = option;
 }
 function startGame(){
   document.getElementById("startGameButton").disabled = true;
