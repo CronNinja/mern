@@ -40,7 +40,7 @@ function createPac(){
   document.getElementById("gameboard").append(pacDOM);
 }
 function run(){
-  wallDetection();
+  wallDetection(walls, pac);
   edgeDetection();
   switch (pac.direction) {
     case "right":
@@ -63,8 +63,6 @@ function run(){
       break;
   }
   document.getElementById("pac").src = "images/pac-" + pac.direction + "-" + updatePhase() + ".png"; 
-  pac.width = document.getElementById("pac").width;
-  pac.height = document.getElementById("pac").height;
 }
 function edgeDetection(){
   if(pac.width + pac.x > gameboard.width && pac.direction === "right"){
@@ -80,35 +78,6 @@ function edgeDetection(){
     pac.y = gameboard.top;
   }
 }
-function isBetween(v1, c1, c2){
-  if(v1 >= c1 && v1 <= (c1 + c2)) return true;
-  return false
-}
-function wallDetection(){
-  walls.forEach((wall) => {
-    if(isBetween((pac.y + pac.height), wall.y, wall.height) || isBetween(pac.y, wall.y, wall.height)){
-      if(Math.abs(wall.x + wall.width - pac.x) < pac.width && pac.direction === "left"){
-        pac.velocity.x = 0;
-        pac.x = wall.x + wall.width + 5;
-      }
-      else if(Math.abs(wall.x - pac.x - pac.width) < pac.width && pac.direction === "right"){
-        pac.velocity.x = 0;
-        pac.x = wall.x - pac.width - 5;
-      }
-    }
-    if(isBetween((pac.x + pac.width), wall.x, wall.width) || isBetween(pac.x, wall.x, wall.width)){
-      if(Math.abs(wall.y + wall.height - pac.y) < pac.height && pac.direction === "up"){
-        pac.velocity.y = 0;
-        pac.y = wall.y + wall.height + 5;
-      }
-      else if(Math.abs(wall.y - pac.y - pac.height) < pac.height && pac.direction === "down"){
-        pac.velocity.y = 0;
-        pac.y = wall.y - pac.height - 5;
-      }
-    }
-
-  });
-}
 function updatePhase(){
   return pac.phase++ % 3 + 1;
 }
@@ -117,20 +86,17 @@ function stopPac(){
       pac.velocity.y = 0;
 }
 function placementCheck(x, y, arr){
-  let checker = 1;
+  let checker = 0;
   arr.forEach((obj) => {
-    if(x === obj.x  && y === obj.y) checker = 0;
+    if(x === obj.x  && y === obj.y) checker = 1;
   });
   return checker;
 }
 function removeObject(x, y, arr, s){
   arr.forEach((obj) => {
     if(x === obj.x  && y === obj.y){
-      if(obj.id !== arr.length){
-        arr.push(arr.splice(obj.id - 1, 1)[0]);
-      }
-      document.getElementById(s + "_" + obj.id).remove();
-      arr.pop();
+    document.getElementById(s + "_" + obj.id).remove();
+    arr.splice(obj.id - 1, 1)
     }
   });
 }
@@ -138,9 +104,9 @@ document.onmousedown = checkMouse;
 function checkMouse(e){
   let x = roundDown(e.clientX);
   let y = roundDown(e.clientY) + 6;
-  let placement = placementCheck(x, y, walls);
+  let placement = placementCheck(x, y, walls) + placementCheck(x, y, ghosts);
   if(y > gameboard.top){
-    if(placement && build){
+    if(!placement && build){
       switch (build) {
         case "Wall":
           addWall(x, y, wallThinkness, wallThinkness);
@@ -152,7 +118,7 @@ function checkMouse(e){
           break;
       }
     }
-    else if (placement === 0, build === "Remove"){
+    else if (placement, build === "Remove"){
       switch (objectOption) {
         case "Wall":
           removeObject(x, y, walls, "wall");

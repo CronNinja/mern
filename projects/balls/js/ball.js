@@ -17,7 +17,7 @@ function randomColor() {
 function randomPOS(){
   return {
     x: Math.floor(Math.random() * ballpit.width),
-    y: 70
+    y: Math.floor(Math.random() * ballpit.height),
   }
 }
 // Ball Objects - a ball is an x position, y position, velocity, color, size, and ElementID
@@ -26,9 +26,12 @@ function createBall(){
   balls.push({
     id: balls.length + 1,
     x: Math.abs(startXY.x - ballpit.width),
-    y: Math.abs(startXY.y - ballpit.height),
+    y: Math.abs(startXY.y + ballpit.top),
     color: randomColor(),
-    size: (Math.floor(Math.random() * 5) + 1) * 10,
+    //size: (Math.floor(Math.random() * 5) + 1) * 10,
+    size: 30,
+    width: 30,
+    height: 30,
     velocity: {
       x: Math.floor(Math.random() * 4) + 1,
       y: Math.floor(Math.random() * 4) + 1
@@ -43,26 +46,24 @@ function updateBallStats(){
 // Collided
 function collided(ball){
   balls.forEach((b) => {
-    let bsize = b.size/2 + ball.size/2;
-    
-    if(b.id !== ball.id && Math.abs(b.x - ball.x) <= bsize && Math.abs(b.y - ball.y) <= bsize){
+    if(b.id !== ball.id && detectCollision(ball, b)){
       ball.velocity.x *= -1;
       ball.velocity.y *= -1;
-      if((Math.abs(b.velocity.x) + Math.abs(b.velocity.y) > Math.abs(ball.velocity.x) + Math.abs(ball.velocity.y))) ball.color = b.color;
     }
   });
 }
+
 // Update Position
 function updatePosition(ball){
   if (bcollision) collided(ball);
   if (ball.x + ball.velocity.x > ballpit.width || ball.x + ball.velocity.x < ballpit.left ){
     ball.velocity.x *= -1;
-    ball.size = (Math.floor(Math.random() * 7) + 1) * 10;
+   // ball.size = (Math.floor(Math.random() * 7) + 1) * 10;
     ball.color = randomColor();
   }
   if (ball.y + ball.velocity.y > ballpit.height || ball.y + ball.velocity.y < ballpit.top){
     ball.velocity.y *= -1;
-    ball.size = (Math.floor(Math.random() * 7) + 1) * 10;
+   // ball.size = (Math.floor(Math.random() * 7) + 1) * 10;
     ball.color = randomColor();
   }
   ball.y += ball.velocity.y;
@@ -127,5 +128,5 @@ function sizeBallpit(){
   newBall.style.height = ball.height + "px";
 
 }
-setInterval(addBall, 200)
+setInterval(addBall, 1000)
 setInterval(updateAllPOS, 22)
