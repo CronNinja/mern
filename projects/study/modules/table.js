@@ -31,11 +31,14 @@ function createHeader(tableID, headers){
       trs += populateTD(tableID, rows[i], i) + '</tr>';
     }
    table += trs + '</tbody></table>';
+   document.getElementById("table").innerHTML = table;
   }
   function createTable(data){
+    document.getElementById("table").innerText = table = "";
     let tableID = data.tableID;
     createHeader(tableID, data.headers);
     populateTable(tableID,data.rows);
+    addHiddenHeaders(data);
   }
   function addHiddenHeaders(data){
     let tableID = data.tableID;
@@ -80,4 +83,4 @@ function createHeader(tableID, headers){
       showColumn(data, index);
     }
   }
-export { table, createTable, addHiddenHeaders }; 
+export { createTable }; 

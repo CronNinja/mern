@@ -1,7 +1,6 @@
 let subjects = [
   {
     title: "States",
-    data: [],
     games: []
   },
   {

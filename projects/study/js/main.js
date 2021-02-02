@@ -1,9 +1,5 @@
-import { cardDeck } from "../modules/cards.js";
-import { table, createTable, addHiddenHeaders } from "../modules/table.js"
-import { getTableData as stateTableData } from "../js/states.js"
-let stateData = stateTableData();
-// document.getElementById("core").innerHTML = cardDeck;
+import { createDropdown } from "../modules/dropdown.js";
 
-createTable(stateData);
-document.getElementById("table").innerHTML = table;
-addHiddenHeaders(stateData);
+import { getDropdownData as stateDropdownData } from "../js/states.js"
+
+createDropdown(stateDropdownData(), "dropdowns");

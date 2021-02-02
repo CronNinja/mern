@@ -195,4 +195,16 @@ function getTableData(){
   }
 }
 
-export  { getTableData };
+function getDropdownData(){
+  return {
+    dropdownID: "states",
+    name: "State",
+    menu: [
+      {
+        title: "Table",
+        listener: "getTableData"
+      }
+    ]
+  }
+}
+export  { getTableData, getDropdownData };
