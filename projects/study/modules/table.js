@@ -1,3 +1,4 @@
+import { updateModal } from "./modal.js"
 let tableParams = {
   tableIndex: 0,
   pageLimit: 25,
@@ -39,6 +40,7 @@ function createHeader(tableID, headers){
     createHeader(tableID, data.headers);
     populateTable(tableID,data.rows);
     addHiddenHeaders(data);
+    addTRListeners(data);
   }
   function addHiddenHeaders(data){
     let tableID = data.tableID;
@@ -82,5 +84,12 @@ function createHeader(tableID, headers){
       document.getElementById(id).className = "bi bi-toggle2-off";
       showColumn(data, index);
     }
+  }
+  function addTRListeners(data){
+    let rows = document.getElementsByTagName("tr");
+    for (let i=0; i < rows.length; i++) {
+      let id = rows[i].id.split('_',3)[2];
+      if(id !== undefined) rows[i].addEventListener("click", () => { updateModal(data, id); }, false);
+    } 
   }
 export { createTable }; 
