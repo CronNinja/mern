@@ -54,10 +54,8 @@ function prevPage(){
 function addListeners(){
   let rows = document.getElementsByTagName("tr");
   for (let i=0; i < rows.length; i++) {
-    rows[i].addEventListener("click", () => { mouseClick(rows[i].id); }, false);
+    rows[i].addEventListener("click", () => { updateModal(employees[rows[i].id]); }, false);
   } 
 }
-function mouseClick(id){
-  updateModal(employees[id]);
-}
+
 export { table, populateTable, nextPage, prevPage };
