@@ -180,23 +180,21 @@ let states = [
     ]
   }
 ];
-let selectedRegion = "";
 
-function selectedRegionData(){
+function selectedRegionData(region){
   let stateTemp = [];
   let regionalStates = states.filter(obj => {
-    return obj.region === selectedRegion;
+    return obj.region === region;
   });
-  console.log(typeof(regionalStates[0]));
   regionalStates[0].states.forEach(state => {
     stateTemp.push([state.state, state.abbr, state.capitol]);
   });
   return stateTemp;
 }
-function getTableData(){
+function getTableData(region = ''){
   let stateTemp = [];
-  if(selectedRegion){
-    stateTemp = selectedRegionData(selectedRegion);
+  if(region){
+    stateTemp = selectedRegionData(region);
   }else {
       states.forEach(region => {
         region.states.forEach(state => {
@@ -205,7 +203,7 @@ function getTableData(){
       });
     }
   return {
-    tableID: 'states',
+    tableID: 'states' + region,
     headers: ["State", "Abbr", "Capitol"],
     rows: stateTemp
   }
@@ -214,6 +212,7 @@ function getTableData(){
 function getDropdownData(region = ''){
   let data = {
     dropdownID: "states",
+    depth: region,
     name: "All States",
     menu: [
       {
@@ -224,8 +223,8 @@ function getDropdownData(region = ''){
     ]
   }
   if(region !== ''){
-    selectedRegion = region;
     data.name = region + " States ";
+    data.dropdownID += region;
   }
   return data;
 }
