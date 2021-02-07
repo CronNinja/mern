@@ -115,7 +115,7 @@ let states = [
     ]
   },
   {
-    region: "Southeast",
+    region: "Midwest",
     states: [
       {
         state: "Minnesota",
@@ -180,14 +180,30 @@ let states = [
     ]
   }
 ];
+let selectedRegion = "";
 
+function selectedRegionData(){
+  let stateTemp = [];
+  let regionalStates = states.filter(obj => {
+    return obj.region === selectedRegion;
+  });
+  console.log(typeof(regionalStates[0]));
+  regionalStates[0].states.forEach(state => {
+    stateTemp.push([state.state, state.abbr, state.capitol]);
+  });
+  return stateTemp;
+}
 function getTableData(){
   let stateTemp = [];
-  states.forEach(region => {
-    region.states.forEach(state => {
-      stateTemp.push([state.state, state.abbr, state.capitol]);
-    })
-  });
+  if(selectedRegion){
+    stateTemp = selectedRegionData(selectedRegion);
+  }else {
+      states.forEach(region => {
+        region.states.forEach(state => {
+          stateTemp.push([state.state, state.abbr, state.capitol]);
+        })
+      });
+    }
   return {
     tableID: 'states',
     headers: ["State", "Abbr", "Capitol"],
@@ -195,16 +211,22 @@ function getTableData(){
   }
 }
 
-function getDropdownData(){
-  return {
+function getDropdownData(region = ''){
+  let data = {
     dropdownID: "states",
-    name: "State",
+    name: "All States",
     menu: [
       {
         title: "Table",
+        name: "States",
         listener: "getTableData"
       }
     ]
   }
+  if(region !== ''){
+    selectedRegion = region;
+    data.name = region + " States ";
+  }
+  return data;
 }
 export  { getTableData, getDropdownData };

@@ -3,5 +3,5 @@ import { initModal } from "../modules/modal.js";
 
 import { getDropdownData as stateDropdownData } from "../js/states.js"
 
-createDropdown(stateDropdownData(), "dropdowns");
+createDropdown(stateDropdownData("Midwest"), "dropdowns");
 initModal();
