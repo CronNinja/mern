@@ -15,22 +15,22 @@ let states = [
       {
         state: "Rhode Island",
         abbr: "RI",
-        capitol: "Providence "
+        capitol: "Providence"
       },
       {
         state: "Connecticut",
         abbr: "CT",
-        capitol: "Hartford "
+        capitol: "Hartford"
       },
       {
         state: "New York",
         abbr: "NY",
-        capitol: "Albany "
+        capitol: "Albany"
       },
       {
         state: "New Jersey",
         abbr: "NJ",
-        capitol: "Trenton  "
+        capitol: "Trenton"
       },
       {
         state: "Pennsylvania",
@@ -65,7 +65,7 @@ let states = [
       {
         state: "Kentucky",
         abbr: "KY",
-        capitol: "Frankfort "
+        capitol: "Frankfort"
       },
       {
         state: "North Carolina",
@@ -208,7 +208,41 @@ function getTableData(region = ''){
     rows: stateTemp
   }
 }
-
+function selectedUnitData(unit, focus){
+  let unitTemp = [];
+  let unitRegion = states.filter(obj => {
+    return obj.region === unit;
+  });
+  unitRegion[0].states.forEach(state => {
+    unitTemp.push([state[focus]]);
+  });
+  return unitTemp;
+}
+function defaultData(unit = '', focus){
+  let unitTemp = [];
+  if(unit){
+    unitTemp = selectedUnitData(unit, focus);
+  }else {
+    states.forEach(unit => {
+      unit.states.forEach(state => {
+        unitTemp.push([state.state]);
+      })
+    });
+  }
+  return unitTemp;
+}
+function getSpellingStateData(region = ''){
+  return {
+    cardID: 'spellingState' + region,
+    cards: defaultData(region, "state")
+  }
+}
+function getSpellingCapitolData(region = ''){
+  return {
+    cardID: 'spellingState' + region,
+    cards: defaultData(region, "capitol")
+  }
+}
 function getDropdownData(region = ''){
   let data = {
     dropdownID: "states",
@@ -219,6 +253,16 @@ function getDropdownData(region = ''){
         title: "Table",
         name: "States",
         listener: "getTableData"
+      },
+      {
+        title: "State Spelling",
+        name: "State Spelling",
+        listener: "getSpellingStateData"
+      },
+      {
+        title: "Capitol Spelling",
+        name: "Capitol Spelling",
+        listener: "getSpellingCapitolData"
       }
     ]
   }
@@ -228,4 +272,4 @@ function getDropdownData(region = ''){
   }
   return data;
 }
-export  { getTableData, getDropdownData };
+export  { getTableData, getDropdownData, getSpellingStateData, getSpellingCapitolData };

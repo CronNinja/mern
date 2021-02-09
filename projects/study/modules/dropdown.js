@@ -1,5 +1,5 @@
-import { getTableData as getStateTableData } from "../js/states.js"
-import { getTableData as getSpellingTableData, getCardData as getSpellingCardData } from "../js/spelling.js"
+import { getTableData as getStateTableData, getSpellingStateData, getSpellingCapitolData } from "../js/states.js"
+import { getTableData as getSpellingTableData, getSpellingData as spellingSpeakData } from "../js/spelling.js"
 import { createTable } from "./table.js"
 import { customModal } from "./modal.js"
 import { createCards } from "./card.js";
@@ -42,7 +42,16 @@ function generateListener(object, func, depth){
     case "states":
       switch (func) {
         case "getTableData":
+          clearAll();
           createTable(getStateTableData(depth));
+          break;
+        case "getSpellingStateData":
+          clearAll();
+          createCards(getSpellingStateData(depth));
+          break;
+        case "getSpellingCapitolData":
+          clearAll();
+          createCards(getSpellingCapitolData(depth));
           break;
         default:
           break;
@@ -54,9 +63,9 @@ function generateListener(object, func, depth){
         clearAll();
         createTable(getSpellingTableData(depth));
         break;
-      case "getCardData":
+      case "getSpellingData":
         clearAll();
-        createCards(getSpellingCardData(depth));
+        createCards(spellingSpeakData(depth));
         break;
       default:
         break;

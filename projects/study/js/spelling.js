@@ -107,7 +107,7 @@ function getTableData(unit = ''){
     rows: defaultData(unit)
   }
 }
-function getCardData(unit = ''){
+function getSpellingData(unit = ''){
   return {
     cardID: 'words' + unit,
     cards: defaultData(unit)
@@ -120,9 +120,9 @@ function getDropdownData(unit = ''){
     name: "All Spelling",
     menu: [
       {
-        title: "Spell It",
+        title: "Spelling",
         name: "Spelling",
-        listener: "getCardData"
+        listener: "getSpellingData"
       },
       {
         title: "Table",
@@ -137,4 +137,4 @@ function getDropdownData(unit = ''){
   }
   return data;
 }
-export  { getTableData, getDropdownData, getCardData };
+export  { getTableData, getDropdownData, getSpellingData };
