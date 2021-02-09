@@ -10,7 +10,7 @@ function toast(msg){
   t.show();
 }
 
-let compliments = ["Nice Work", "Great Job", "Keep It Up", "Way To Go"];
-let mistakes = ["Try Agains", "Oh No", "Oopsies", "Error Error"];
+let compliments = ["Nice Work", "Great Job", "Keep It Up", "Way To Go", "Crush It", "Amazing", "Another One"];
+let mistakes = ["Try Again", "Oh No", "Oopsies", "Error Error", "Ummm...", "Hey Now", "This is Ackward"];
 
 export { toast }
