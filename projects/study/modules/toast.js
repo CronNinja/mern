@@ -1,8 +1,8 @@
 function toast(msg){
   if(msg === 1){
-    msg = compliments[Math.round(Math.random() * --compliments.length)];
+    msg = compliments[Math.round(Math.random() * (compliments.length - 1))];
   } else if (msg === -1){
-    msg = mistakes[Math.round(Math.random() * --mistakes.length)];
+    msg = mistakes[Math.round(Math.random() * (mistakes.length -1))];
   }
   document.getElementById("toast-body").innerHTML = msg;
   let tId = document.getElementById('toastMe');
