@@ -41,10 +41,10 @@ function addInputListener(cards){
 function checkInput(e, card, length){
   if(e.target.value.toLowerCase() === card.toLowerCase()){
     document.getElementById("card_"+ card).className = "card bg-success mb-3";
-    toast("Another One!")
+    toast(1);
   } else {
     document.getElementById("card_"+ card).className = "card bg-danger mb-3";
-    toast("Nope!")
+    toast(-1)
   }
   if(cardCount === length){
     toast("You Did It!");
