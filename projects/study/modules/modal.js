@@ -30,4 +30,10 @@ function createModalBody(data, id){
   return body + '</p>';
 }
 
-export { initModal, updateModal }
+function customModal(data){
+  var modal = new bootstrap.Modal(document.getElementById('modal'));
+  document.getElementById("modalTitle").innerHTML = data.title;
+  document.getElementById("modalBody").innerHTML = data.body;
+  modal.show()
+}
+export { initModal, updateModal, customModal }

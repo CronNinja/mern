@@ -1,5 +1,9 @@
 import { getTableData as getStateTableData } from "../js/states.js"
-import { createTable as stateCreateTable } from "./table.js"
+import { getTableData as getSpellingTableData, getCardData as getSpellingCardData } from "../js/spelling.js"
+import { createTable } from "./table.js"
+import { customModal } from "./modal.js"
+import { createCards } from "./card.js";
+
 
 function createDropdown(data, parent = "body"){
   let dropdownID = data.dropdownID;
@@ -33,20 +37,38 @@ function addListeners(parent, depth){
 }
 
 function generateListener(object, func, depth){
+  
   switch (object.replace(depth,'')) {
     case "states":
       switch (func) {
         case "getTableData":
-          stateCreateTable(getStateTableData(depth));
+          createTable(getStateTableData(depth));
           break;
-      
         default:
           break;
       }
       break;
+    case "words":
+    switch (func) {
+      case "getTableData":
+        clearAll();
+        createTable(getSpellingTableData(depth));
+        break;
+      case "getCardData":
+        clearAll();
+        createCards(getSpellingCardData(depth));
+        break;
+      default:
+        break;
+    }
+    break;
   
     default:
       break;
   }
+}
+function clearAll(){
+  document.getElementById("table").innerHTML = "";
+  document.getElementById("card").innerHTML = "";
 }
 export { createDropdown }
