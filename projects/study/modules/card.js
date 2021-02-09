@@ -5,8 +5,8 @@ function getCard(card){
     <div class="col">
       <div class="card" id="card_${ card }">
         <div class="card-body">
+          <p><button type="button" class="btn btn-warning" id="cardSpeak_${ card }">Speak</button></p>
           <p class="card-text"><input type="text" id="cardInput_${ card }" autofocus /></p>
-          <button type="button" class="btn btn-warning" id="cardSpeak_${ card }">Speak</button>
         </div>
       </div>
     </div>
