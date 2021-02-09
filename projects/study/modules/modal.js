@@ -15,7 +15,7 @@ function initModal(){
   }
 
 function updateModal(data, id){
-  var modal = new bootstrap.Modal(document.getElementById('modal'));
+  let modal = new bootstrap.Modal(document.getElementById('modal'));
   if(data){
     document.getElementById("modalTitle").innerHTML = data.rows[id][0];
     document.getElementById("modalBody").innerHTML = createModalBody(data,id);
@@ -31,7 +31,7 @@ function createModalBody(data, id){
 }
 
 function customModal(data){
-  var modal = new bootstrap.Modal(document.getElementById('modal'));
+  let modal = new bootstrap.Modal(document.getElementById('modal'));
   document.getElementById("modalTitle").innerHTML = data.title;
   document.getElementById("modalBody").innerHTML = data.body;
   modal.show()
