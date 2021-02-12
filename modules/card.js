@@ -1,5 +1,5 @@
 function createCard(parent, data){
-  data.forEach(card => { makeCard(parent, card); });
+  for(let i = data.length - 1; i >= 0; i--){ makeCard(parent,data[i])}
 }
 function makeCard(parent, data){
   let initHtml = initCard(data.name);
@@ -14,14 +14,13 @@ function makeCard(parent, data){
           document.getElementById("card-buttons-" + data.name).innerHTML += makeButton(cardHtml.buttons[k]);
         }
       } else {
-        console.log(key);
         document.getElementById("card-" + key + "-" + data.name).innerText += cardHtml[key];
       }
     }
   }
 }
 function makeButton(button){
-  return `<a href="${ button.link }" class="btn btn-${ button.color }">${ button.text }</a>`;
+  return `<a href="${ button.link }" class="btn btn-${ button.color }" target="${ button.target }">${ button.text }</a>&nbsp;`;
 }
 function initCard(name){
   return `
