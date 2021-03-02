@@ -144,6 +144,29 @@ let projectPage = [
         }
       ]
     }
+  },
+  {
+    name: "pacMaker2",
+    html: {
+      header: "PacMaker v0.2",
+      title: "New Techniques for better coding, and user experience",
+      text: "Going to make this project a staple of my portfolio but updating the code with better standards as I progress through the course..",
+      footer: "Last Updated 2 March 2021",
+      buttons: [
+        {
+          link: "https://github.com/CronNinja/mern/blob/main/projects/pacMaker/",
+          text: "Source Code",
+          color: "primary",
+          target: "_target"
+        },
+        {
+          link: "pacMaker/",
+          text: "Demo",
+          color: "success",
+          target: "_target"
+        }
+      ]
+    }
   }
 ];
 

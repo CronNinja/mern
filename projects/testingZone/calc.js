@@ -14,6 +14,9 @@ const calc = (x, y, op) => {
       if(y === 0) return "Can't divide by 0.";
       return x / y;
       break;
+    case '!':
+      return 0;
+      break;
     default:
       return "Did not receive a correct operator";
       break;

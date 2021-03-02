@@ -31,6 +31,11 @@ describe('calc', () => {
     const op = '*';
     expect(calc(x, y, op)).toBe(12);
   });
+    // Should Multiply Numbers
+    it('should multiply two numbers', () => {
+      const op = '!';
+      expect(calc(x, y, op)).toEqual(undefined);
+    });
   // Should divide Numbers
   it('should divide one number into another', () => {
     const op = '/';

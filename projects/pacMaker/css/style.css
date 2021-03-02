@@ -1,0 +1,26 @@
+.container{
+  width: 95vh;
+  height: 95vh;
+  padding: 0px;
+  margin: 0px;
+}
+.gameboard{
+  display: grid;
+  grid-template-columns:  repeat(auto-fill, 50px);
+  grid-template-rows: repeat(auto-fill, 50px);
+  background-color: lightgray;
+  padding: 0px;
+  margin: 0px;
+}
+.panel{
+  padding: 0px;
+  margin: 0px;
+}
+.show-panel{
+  border-style: solid;
+  border-color: black;
+
+}
+.hide-panel{
+  border-style: none;
+}
