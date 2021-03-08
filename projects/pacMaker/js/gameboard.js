@@ -80,8 +80,17 @@ function reset(){
 // Buttons
 function buttonListeners(){
   document.getElementById("navbarButtons").addEventListener("mousedown", e => {
-    let id = e.target.id;
-    console.log(id);
+    let func = e.target.id.split("Button")[0];
+    switch (func) {
+      case "reset":
+        reset();
+        break;
+      case "grid":
+        swapGrid();
+        break;
+      default:
+        break;
+    }
   });
   let buildElements = document.querySelectorAll(".build");
   buildElements.forEach(b => {
@@ -89,7 +98,6 @@ function buttonListeners(){
       let setBuild = e.target.id.split("-");
       build.action = setBuild[0];
       build.option = setBuild[1] ? setBuild[1] : "";
-      console.log(build);
     });
   })
 }
