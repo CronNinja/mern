@@ -76,11 +76,8 @@ function reset(){
   boardHTML.innerHTML = "";
   newBoard();
 }
-// Event Listeners
-// Buttons
-function buttonListeners(){
-  document.getElementById("navbarButtons").addEventListener("mousedown", e => {
-    let func = e.target.id.split("Button")[0];
+function NavBarListner(e){
+  let func = e.target.id.split("Button")[0];
     switch (func) {
       case "reset":
         reset();
@@ -91,7 +88,11 @@ function buttonListeners(){
       default:
         break;
     }
-  });
+}
+// Event Listeners
+// Buttons
+function buttonListeners(){
+  document.getElementById("navbarButtons").addEventListener("mousedown", NavBarListner);
   let buildElements = document.querySelectorAll(".build");
   buildElements.forEach(b => {
     document.getElementById(b.id).addEventListener("mousedown", e => {
