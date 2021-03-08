@@ -59,7 +59,7 @@ const makePac = (x = defaultStart.x, y = defaultStart.y) => {
 };
 
 // Jest Exports
-exports.createPac = createPac;
+// exports.createPac = createPac;
 
 // Module Exports
-// export { makePac }
+export { makePac }

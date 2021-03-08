@@ -10,9 +10,11 @@
     <div class="container-fluid">
       <a class="navbar-brand portfolio-link" href="/mern/index.html">Portfolio</a>
       <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#buildModal">Build</button>
-      <button type="button" class="btn btn-secondary" onclick="reset()" id="resetButton">Reset</button>
-      <button type="button" class="btn btn-warning" onclick="swapGrid()" id="gridButton">Grid</button>
-      <span class="navbar-text">
+      <div id="navbarButtons">
+        <button type="button" class="btn btn-secondary" id="resetButton">Reset</button>
+        <button type="button" class="btn btn-warning" id="gridButton">Grid</button>
+      </div>
+      <span class="navbar-text"></span>
         Arrow Keys Move, Spacebar Stops
       </span>
     </div>
@@ -28,18 +30,12 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <button type="button" class="btn btn-dark" onclick="builder('Wall', '#000000')"  data-bs-dismiss="modal">Wall</button>
-          <button type="button" class="btn btn-danger" onclick="builder('Remove')"  data-bs-dismiss="modal">Remove</button>
+          <button type="button" class="btn btn-dark build" id="Wall-#000000"  data-bs-dismiss="modal">Wall</button>
+          <button type="button" class="btn btn-success build" id="Wall-#5cb85c"  data-bs-dismiss="modal">Wall</button>
           <hr >
-         <!-- <input type="image"  onclick="builder('Ghost', 'blue')"  src="images/blue-left-1.png" data-bs-dismiss="modal"/>
-          <input type="image"  onclick="addObject('Ghost', 'green')"  src="images/green-left-1.png" data-bs-dismiss="modal"/>
-          <input type="image"  onclick="addObject('Ghost', 'orange')"  src="images/orange-left-1.png" data-bs-dismiss="modal"/>
-          <input type="image"  onclick="addObject('Ghost', 'pink')"  src="images/pink-left-1.png" data-bs-dismiss="modal"/>
-          <input type="image"  onclick="addObject('Ghost', 'purple')"  src="images/purple-left-1.png" data-bs-dismiss="modal"/>
-          <input type="image"  onclick="addObject('Ghost', 'red')"  src="images/red-left-1.png" data-bs-dismiss="modal"/>
-          <button type="button" class="btn btn-danger" onclick="addObject('Remove', 'Ghost')"  data-bs-dismiss="modal">Remove</button>
+          <input type="image"  class="build" id="makePac" src="images/pac-left-2.png" data-bs-dismiss="modal" />
           <hr >
-         -->
+          <button type="button" class="btn btn-danger build" id="Remove"  data-bs-dismiss="modal">Remove</button>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -49,5 +45,5 @@
   </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
-<script src="./js/gameboard.js"></script> 
+<script type="module" src="./js/gameboard.js"></script> 
 </html>

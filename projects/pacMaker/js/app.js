@@ -1,4 +1,3 @@
-import { makePac } from "./pac.js";
-import { init } from "./gameboard.js"
+import { newBoard } from "./gameboard.js"
 
-init()
+newBoard();

@@ -1,3 +1,4 @@
+import { makePac } from "./pac.js"
 let board = {};
 let boardHTML = null;
 let divs = [];
@@ -69,19 +70,32 @@ function swapGrid(){
     elements[i].className = "panel " + opt;
   }
 }
-function builder(action, option = ''){
-  build.action = action;
-  build.option = option;
-}
+
 function reset(){
   divs = [];
   boardHTML.innerHTML = "";
   newBoard();
 }
 // Event Listeners
+// Buttons
+function buttonListeners(){
+  document.getElementById("navbarButtons").addEventListener("mousedown", e => {
+    let id = e.target.id;
+    console.log(id);
+  });
+  let buildElements = document.querySelectorAll(".build");
+  buildElements.forEach(b => {
+    document.getElementById(b.id).addEventListener("mousedown", e => {
+      let setBuild = e.target.id.split("-");
+      build.action = setBuild[0];
+      build.option = setBuild[1] ? setBuild[1] : "";
+      console.log(build);
+    });
+  })
+}
 
 // Gameboard Mouse Down
-const addListeners = () => {
+function gameboardListeners(){
   boardHTML.addEventListener('mousedown', e => {
     let id = e.target.id;
     switch (build.action) {
@@ -91,10 +105,17 @@ const addListeners = () => {
       case "Remove":
         removeObject(id);
         break;
+      case "makePac":
+        makePac(e.clientX, e.clientY);
+        break;
       default:
         break;
     }
   });
+}
+const addListeners = () => {
+  gameboardListeners();
+  buttonListeners();
 }
 // Jest Exports
 // exports.roundDown = roundDown;
