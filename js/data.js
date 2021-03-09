@@ -167,6 +167,28 @@ let projectPage = [
         }
       ]
     }
+  },
+  {
+    name: "MBTA",
+    html: {
+      header: "MBTA v0.1",
+      text: "Building out an MBTA bus tracking app",
+      footer: "Last Updated 9 March 2021",
+      buttons: [
+        {
+          link: "https://github.com/CronNinja/mern/blob/main/projects/mbta/",
+          text: "Source Code",
+          color: "primary",
+          target: "_target"
+        },
+        {
+          link: "mbta/",
+          text: "Demo",
+          color: "success",
+          target: "_target"
+        }
+      ]
+    }
   }
 ];
 
