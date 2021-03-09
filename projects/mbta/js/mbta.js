@@ -17,7 +17,7 @@ let map = new mapboxgl.Map({
   removeMarkers();
   routeData(route);
   console.log("Vehicles on route: " + route.length)
-  setTimeout(run, 15000);
+  setTimeout(run, 1500000);
 }
 function removeMarkers(){
   if(markers){
@@ -28,17 +28,44 @@ function removeMarkers(){
 }
 function routeData(route){
   route.forEach(vehicle => {
-    markers.push(new mapboxgl.Marker()
+    let occupancy = getOccupancyData(vehicle.attributes.occupancy_status);
+    markers.push(new mapboxgl.Marker({color: occupancy.color})
     .setLngLat([vehicle.attributes.longitude, vehicle.attributes.latitude])
-    .setPopup(new mapboxgl.Popup().setHTML(buildPopup(vehicle)))
+    .setPopup(new mapboxgl.Popup().setHTML(buildPopup(occupancy)))
     .addTo(map));
+    console.log(occupancy)
   });
 }
-function buildPopup(vehicle){
+function getOccupancyData(o){
+  switch (o) {
+    case "MANY_SEATS_AVAILABLE":
+      return {
+        color: "MediumSeaGreen",
+        seats: "Many Seats"
+      };
+      break;
+    case "FEW_SEATS_AVAILABLE":
+      return {
+        color: "Orange",
+        seats: "Few Seats"
+      };
+      break;
+    case "FULL":
+      return {
+        color: "Red",
+        seats: "Full"
+      };
+      break;
+    default:
+      return "#3FB1CE"
+      break;
+  }
+}
+function buildPopup(occupancy){
   let html = `<h2>Route: ${ routeID }</h2><hr>
               <ul>
                 <li>
-                  Occupancy: ${ vehicle.attributes.occupancy_status }
+                  Occupancy: ${ occupancy.seats }
                 </li>
               </ul>`;
   return html;
