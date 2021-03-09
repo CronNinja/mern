@@ -1,23 +1,27 @@
 import { mapAccessToken } from "./config.js"
-let routeID = 1;
+let routeID = null;
 let markers = [];
 mapboxgl.accessToken = mapAccessToken;
-
 // New Map Instance
-let map = new mapboxgl.Map({
-  container: 'map',
-  style: 'mapbox://styles/mapbox/streets-v11',
-  center: [-71.104081, 42.365554],
-  zoom: 12,
-});
+let map = undefined;
+function setRouteID(id){
+  routeID = id;
+}
+function initMap(){
+  map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/streets-v11',
+    center: [-71.104081, 42.365554],
+    zoom: 12,
+  });
+}
 
-  async function run(){
-  console.log(new Date());
-	let route = await getBusLocations();
+
+async function run(){
+  let route = await getBusLocations();
   removeMarkers();
   routeData(route);
-  console.log("Vehicles on route: " + route.length)
-  setTimeout(run, 1500000);
+  setTimeout(run, 10000);
 }
 function removeMarkers(){
   if(markers){
@@ -31,9 +35,8 @@ function routeData(route){
     let occupancy = getOccupancyData(vehicle.attributes.occupancy_status);
     markers.push(new mapboxgl.Marker({color: occupancy.color})
     .setLngLat([vehicle.attributes.longitude, vehicle.attributes.latitude])
-    .setPopup(new mapboxgl.Popup().setHTML(buildPopup(occupancy)))
+    .setPopup(new mapboxgl.Popup().setHTML(buildPopup(vehicle, occupancy)))
     .addTo(map));
-    console.log(occupancy)
   });
 }
 function getOccupancyData(o){
@@ -57,17 +60,24 @@ function getOccupancyData(o){
       };
       break;
     default:
-      return "#3FB1CE"
+      return {
+        color: "#3FB1CE",
+        seats: "Unknown"
+      };
       break;
   }
 }
-function buildPopup(occupancy){
-  let html = `<h2>Route: ${ routeID }</h2><hr>
+function buildPopup(vehicle, occupancy){
+  let html = `<p><strong>Route:</strong> ${ routeID }<hr>
               <ul>
-                <li>
+              <li>
                   Occupancy: ${ occupancy.seats }
                 </li>
-              </ul>`;
+                <li>
+                  Updated: ${ vehicle.attributes.updated_at.split("T")[1].split("-")[0] }
+                </li>
+              </ul>
+            </p>`;
   return html;
 }
 // Request bus data from MBTA
@@ -77,5 +87,4 @@ async function getBusLocations(){
 	const json     = await response.json();
 	return json.data;
 }
-
-run();
+export { initMap, run, setRouteID }

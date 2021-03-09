@@ -4,7 +4,7 @@ body {
 }
 #map {
   position: absolute;
-  top: 0;
+  top: 50px;
   bottom: 0;
   width: 100%;
 }
@@ -13,4 +13,18 @@ body {
   position: absolute;
   left: 0;
   padding: 10px;
+}
+.routeGrid{
+  display: grid;
+  grid-template-columns:  repeat(auto-fill, 55px);
+  grid-template-rows: repeat(auto-fill, 55px);
+  padding: 10px;
+  margin: 10px;
+}
+.panel{
+  padding: 5px;
+  margin: 5px;
+  text-align: center;
+  background-color: lightgray;
+  border-style: solid;
 }
