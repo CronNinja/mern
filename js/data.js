@@ -180,12 +180,6 @@ let projectPage = [
           text: "Source Code",
           color: "primary",
           target: "_target"
-        },
-        {
-          link: "mbta/",
-          text: "Demo",
-          color: "success",
-          target: "_target"
         }
       ]
     }
