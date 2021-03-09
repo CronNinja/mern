@@ -1,9 +1,9 @@
-#MBTA Data
+# MBTA Data
 
-###Description
+### Description
 MBTA vehicle data tracking application.
 
-####How to Run
+#### How to Run
 Sign up for https://www.mapbox.com and create a developer API Key
 Place key in ./js/config.js as shown
 ```javascript
@@ -12,7 +12,7 @@ export { mapAccessToken }
 ```
 Open index.html in browser
 
-####Roadmap
+#### Roadmap
 - Build out Popups
 - Select Route
 - Clear Map
@@ -21,7 +21,7 @@ Open index.html in browser
 - ETA
 - Commuter Rail Status
 
-####License
+#### License
 Copyright 2021 Richard Pruitt
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
