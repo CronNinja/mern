@@ -8,7 +8,7 @@
   display: grid;
   grid-template-columns:  repeat(auto-fill, 50px);
   grid-template-rows: repeat(auto-fill, 50px);
-  background-color: lightgray;
+  background-color: white;
   padding: 0px;
   margin: 0px;
 }

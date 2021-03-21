@@ -1,9 +1,10 @@
-import { makePac } from "./pac.js"
+import { makePac, run, changePacDirections, reset as resetElements, setBoard } from "./pac.js"
+let runTime = null;
 let board = {};
 let boardHTML = null;
 let divs = [];
 let build = {
-  action: "Wall",
+  action: "",
   option: "#000"
 }
 
@@ -21,6 +22,8 @@ const init = () => {
   board.height = roundDown(document.getElementById("container").offsetHeight * .95, 50);
   boardHTML.style.width = board.width + "px";
   boardHTML.style.height = board.height + "px";
+  board.top = boardHTML.offsetTop;
+  board.left = boardHTML.offsetLeft;
 }
 // Creates the correct number of Divs on the gameboard
 const createGridDivs = (board) => {
@@ -38,27 +41,26 @@ const createGridDivs = (board) => {
 }
 
 // createWall
-const createWall = (id, c = "#000000") => {
-  let div = document.getElementById(id);
-  if(divs.findIndex(div => div.id === id) === -1){
+const createWall = (d, c = "#000000") => {
+  if(divs.findIndex(div => div.id === d.id) === -1){
     divs.push({
-      id: id,
+      id: d.id,
       type: "wall",
-      x: div.offsetLeft,
-      y: div.offsetTop,
+      x: d.offsetLeft,
+      y: d.offsetTop,
       width: 50,
       height: 50,
       color: c
     });
-    div.style.backgroundColor = c;
+    d.style.backgroundColor = c;
   } 
 }
 
 // removeObject
-function removeObject(id){
-  let x = divs.findIndex(div => div.id === id);
+function removeObject(d){
+  let x = divs.findIndex(div => div.id === d.id);
   if(x >= 0){
-    document.getElementById(id).style.backgroundColor = boardHTML.style.backgroundColor;
+    document.getElementById(d.id).style.backgroundColor = boardHTML.style.backgroundColor;
     divs.splice(x, 1);
   }
 }
@@ -70,11 +72,24 @@ function swapGrid(){
     elements[i].className = "panel " + opt;
   }
 }
-
+function pause(){
+  if(runTime){
+    clearInterval(runTime);
+    runTime = null;
+    document.getElementById("startPauseButton").innerHTML = "Start"
+  } else {
+    build.action = "";
+    document.getElementById("startPauseButton").innerHTML = "Pause"
+    runTime = setInterval(run, 100);
+  }
+}
 function reset(){
+  clearInterval(runTime);
   divs = [];
+  resetElements();
   boardHTML.innerHTML = "";
   newBoard();
+  document.getElementById("startPauseButton").innerHTML = "Start"
 }
 function NavBarListner(e){
   let func = e.target.id.split("Button")[0];
@@ -85,6 +100,9 @@ function NavBarListner(e){
       case "grid":
         swapGrid();
         break;
+      case "startPause":
+        pause();
+      break;
       default:
         break;
     }
@@ -106,21 +124,50 @@ function buttonListeners(){
 // Gameboard Mouse Down
 function gameboardListeners(){
   boardHTML.addEventListener('mousedown', e => {
-    let id = e.target.id;
+    let div = document.getElementById(e.target.id);
     switch (build.action) {
       case "Wall":
-        createWall(id, build.option);
+        createWall(div, build.option);
         break;
       case "Remove":
-        removeObject(id);
+        removeObject(div);
         break;
       case "makePac":
-        makePac(e.clientX, e.clientY);
+        makePac(div.offsetLeft + 5, div.offsetTop + 5);
         break;
       default:
         break;
     }
   });
+  setBoard(board, divs);
+}
+// On Key
+document.onkeydown = checkKey;
+function checkKey(e) {
+  let eKey = e.key;
+  switch (eKey) {
+    case "w":
+    case "W":
+      changePacDirections(1, "up")
+      break;
+    case "s":
+    case "S":
+      changePacDirections(1, "down")
+      break;
+    case "a":
+    case "A":
+      changePacDirections(1, "left")
+      break;
+    case "d":
+    case "D":
+      changePacDirections(1, "right")
+      break;
+    default:
+      break;
+    }
+    if (eKey === ' ' || e.code === "Space"){
+      pause();
+    }
 }
 const addListeners = () => {
   gameboardListeners();
@@ -129,6 +176,7 @@ const addListeners = () => {
 // Jest Exports
 // exports.roundDown = roundDown;
 // exports.createWall = createWall;
+
 
 // Initialize the Gameboard Promise
 // initPromise
