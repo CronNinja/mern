@@ -1,40 +1,19 @@
-# MBTA Data
-With project overlays MBTA data onto a MapBox map. By selecting a Bus, or Train from the Action button users will see all current vehicles on that route and it's current capacity. 
+# Study Guide
+A study guide example that advantage of modular building, Speech API, and various Bootstrap Elements
 
 ## Getting Started
-The steps below will get you up and running MBTA DATA locally for testing and development
+Just download the folders and run index.html in a web browser
 
-### Prerequisites
-What you will need first to get started
-```
-npm install -g npx
-```
+## HowTo
+- Tables: Toggle Button next to fields will hide them, clicking on a row will create a pop of the row's data
+- Speech: Clicking the Speak Button will allow for the browser to speech the word, and the input field below validates correct spelling
 
-Sign up for https://www.mapbox.com and create a developer API Key
+## Update Coming Soon
+- API Calls for Data
+- Create/Edit Study Guides
 
-### Install
-Download to your local machine
-
-Place key in ./js/config.js as shown
-```javascript
-const mapAccessToken = API_KEY
-export { mapAccessToken }
-```
-
-### Run
-Navigate to mbta folder and spin up a local session
-```
-npx http-server
-```
-In your web browser navigate to your localhost root
-
-#### Roadmap
-- Build out Popups
-- Select Route
-- Clear Map
-- Add user location
-- ETA
-- Commuter Rail Status
+### Demo
+https://cronninja.github.io/mern/projects/study/
 
 ### License
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:

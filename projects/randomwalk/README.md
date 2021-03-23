@@ -1,40 +1,17 @@
-# MBTA Data
-With project overlays MBTA data onto a MapBox map. By selecting a Bus, or Train from the Action button users will see all current vehicles on that route and it's current capacity. 
+# Random Walk Process
+This code illustrates how a virus can spread through a pool. Each ball randomly moves up/down/left/right and has collision detection or knows when it comes in contact with another ball.
+
+If a ball is infected with Covid a and comes in contact with another ball it will infect that ball and there is a probability that the infect ball will get sick or die. However, each ball has an immunity counter, the more it comes in contact with a ball that has Covid the more it because immuned from Covid.
 
 ## Getting Started
-The steps below will get you up and running MBTA DATA locally for testing and development
+Just download the folders and run index.html in a web browser
 
-### Prerequisites
-What you will need first to get started
-```
-npm install -g npx
-```
+## HowTo
+- Load index.html
+- Press the Release Covid-19 Button to randomly infect 1 ball
 
-Sign up for https://www.mapbox.com and create a developer API Key
-
-### Install
-Download to your local machine
-
-Place key in ./js/config.js as shown
-```javascript
-const mapAccessToken = API_KEY
-export { mapAccessToken }
-```
-
-### Run
-Navigate to mbta folder and spin up a local session
-```
-npx http-server
-```
-In your web browser navigate to your localhost root
-
-#### Roadmap
-- Build out Popups
-- Select Route
-- Clear Map
-- Add user location
-- ETA
-- Commuter Rail Status
+### Demo
+https://cronninja.github.io/mern/projects/randomwalk/
 
 ### License
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
