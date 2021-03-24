@@ -10,7 +10,7 @@ let navbar = `
         <a class="nav-link" href="/mern/projects/" id="mern">MERN Projects</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/mern/projects/practice/" id="practice">Sample Projects</a>
+        <a class="nav-link" href="/mern/projects/practice.html" id="practice">Sample Projects</a>
       </li>
     </ul>
   </div>
