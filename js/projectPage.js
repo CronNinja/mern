@@ -1,6 +1,6 @@
 import { createCard } from "../modules/card.js";
 import { projectPage } from "./data.js";
-import { updateNavBar } from "./navbar.js";
+import { updateNavBar } from "../modules/navbar.js";
 
 createCard("main", projectPage);
 updateNavBar();

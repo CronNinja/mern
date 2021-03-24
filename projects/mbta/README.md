@@ -21,6 +21,14 @@ const mapAccessToken = API_KEY
 export { mapAccessToken }
 ```
 
+Uncomment below code in ./js/app.js
+```
+/*
+  initMap();
+  setRouteID(1);
+  run();
+*/
+```
 ### Run
 Navigate to mbta folder and spin up a local session
 ```

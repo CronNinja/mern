@@ -123,6 +123,29 @@ let projectPage = [
     }
   },
   {
+    name: "eyetracker",
+    html: {
+      header: "Eye Tracker",
+      title: "",
+      text: "Testing mouse tracking.",
+      footer: "3 Mar 2021",
+      buttons: [
+        {
+          link: "https://github.com/CronNinja/mern/eyetracker/",
+          text: "Source Code",
+          color: "primary",
+          target: "_target"
+        },
+        {
+          link: "eyetracker/",
+          text: "Demo",
+          color: "success",
+          target: "_target"
+        }
+      ]
+    }
+  },
+  {
     name: "pacMaker",
     html: {
       header: "PacMaker",
@@ -211,4 +234,11 @@ let practicePage = [
   }
 ];
 
-export { landingPage, projectPage, practicePage }
+let carousel = [{
+  src: "../images/nhHike.jpg",
+  alt: "NH Hike",
+  title: "New Hampshire Hike",
+  p: "Testing"
+}];
+
+export { landingPage, projectPage, practicePage, carousel }
